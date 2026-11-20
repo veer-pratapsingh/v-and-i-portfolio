@@ -147,6 +147,17 @@ const projects = [
     accent: "accent-blue",
     size: "",
   },
+  {
+    number: "13",
+    title: "Veer Pratap Singh — Portfolio",
+    type: "Personal website · Portfolio",
+    description:
+      "A bold personal portfolio for an AI and full-stack engineer, with a short intro, letter-by-letter reveals, pixel-dissolve transitions and a one-click CV download.",
+    image: "veer-pratap-singh-portfolio",
+    url: "https://veer-pratap-singh-portfolio.vercel.app/",
+    accent: "accent-orange",
+    size: "project-wide",
+  },
 ];
 
 const hotelBenchmarks = [
@@ -228,7 +239,7 @@ export default function Home() {
               </div>
             </div>
             <dl className="hero-stat" aria-label="Portfolio summary">
-              <div><dt>Web projects</dt><dd>12</dd></div>
+              <div><dt>Web projects</dt><dd>{projects.length}</dd></div>
               <div><dt>Hospitality projects</dt><dd>06</dd></div>
             </dl>
           </div>

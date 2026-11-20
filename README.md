@@ -26,6 +26,7 @@ Hotel websites are listed first, then the rest of the work.
 - [Ambur Cold Chain](https://ambur.co.in/)
 - [Tripund Technologies](https://tripundtechnologies.in/)
 - [AFS National AI Hackathon](https://afsnationalaihackathon.vercel.app/)
+- [Veer Pratap Singh — Portfolio](https://veer-pratap-singh-portfolio.vercel.app/) (personal website)
 
 ## Our research
 

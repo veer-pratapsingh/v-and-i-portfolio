@@ -41,7 +41,7 @@ test("server-renders the completed portfolio", async () => {
   assert.match(html, /Let’s turn your next idea/);
 
   const renderedProjects = html.match(/<article class="project-card/g) ?? [];
-  assert.equal(renderedProjects.length, 12);
+  assert.equal(renderedProjects.length, 13);
 
   const renderedContentCases = html.match(/<article class="content-case/g) ?? [];
   assert.equal(renderedContentCases.length, 0);
@@ -69,6 +69,7 @@ test("server-renders the completed portfolio", async () => {
     "ratswaage-hotel-magdeburg.vercel.app",
     "hotel-golden-pearl.vercel.app",
     "afsnationalaihackathon.vercel.app",
+    "veer-pratap-singh-portfolio.vercel.app",
   ]) {
     assert.match(html, new RegExp(domain.replaceAll(".", "\\.")));
   }
