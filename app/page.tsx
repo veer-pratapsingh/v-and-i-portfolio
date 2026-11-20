@@ -1,5 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
 import { Arrow } from "./arrow";
+import { Letters } from "./letters";
+import { PixelTransition } from "./pixel-transition";
+
+const ink = "#141412";
+const terracotta = "#c2512a";
 
 // Hotel websites lead, then everything else. The grid alternates a wide card,
 // a pair, then a mirrored wide card, so `size` follows position, not project.
@@ -169,6 +174,11 @@ export default function Home() {
   return (
     <>
       <a className="skip-link" href="#work">Skip to our work</a>
+      {/* CSS-only intro: plays once per load in about 1.6 s and never blocks clicks. */}
+      <div className="loader" aria-hidden="true">
+        <p className="loader-text"><Letters text="Veer + Inderpreet" /></p>
+        <p className="loader-count" />
+      </div>
 
       <header className="site-header">
         <a className="monogram" href="#top" aria-label="Veer and Inderpreet — home">
@@ -197,9 +207,9 @@ export default function Home() {
             </p>
           </div>
 
-          <h1>
-            <span className="hero-line">We build brands</span>{" "}
-            <span className="hero-line hero-line-accent">people choose.</span>
+          <h1 aria-label="We build brands people choose.">
+            <span className="hero-line"><Letters text="We build brands" /></span>{" "}
+            <span className="hero-line hero-line-accent"><Letters text="people choose." seed={13} /></span>
           </h1>
 
           <div className="hero-foot">
@@ -313,6 +323,11 @@ export default function Home() {
           </div>
         </section>
 
+        {/* The work section dissolves into the dark hotel list. */}
+        <div className="pixel-strip" aria-hidden="true">
+          <PixelTransition fill={ink} accent={terracotta} />
+        </div>
+
         <section className="benchmark-section" id="benchmarks">
           <div className="benchmark-heading">
             <p className="section-kicker">Hospitality projects / Selected hotels</p>
@@ -394,6 +409,10 @@ export default function Home() {
             </div>
           </div>
         </section>
+
+        <div className="pixel-strip" aria-hidden="true">
+          <PixelTransition fill={ink} accent={terracotta} />
+        </div>
 
         <section className="contact-section" id="contact">
           <p className="section-kicker">Start a conversation</p>

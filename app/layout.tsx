@@ -14,7 +14,7 @@ const instrumentSerif = Instrument_Serif({
   style: ["normal", "italic"],
 });
 
-const socialImage = "https://veer-pratap-singh-portfolio.vercel.app/og.png";
+const socialImage = "https://v-and-i-portfolio.vercel.app/og.png";
 
 export const metadata: Metadata = {
     title: "Veer + Inderpreet — Hospitality Web, Content & Brand Partners",

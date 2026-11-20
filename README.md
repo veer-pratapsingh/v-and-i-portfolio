@@ -4,7 +4,11 @@ A hospitality-focused studio portfolio for Veer Pratap Singh and Inderpreet
 Singh, showcasing live websites, digital experiences, brand consulting services,
 and a tailored Hotel ElbRivera website audit.
 
-**Live site:** [veer-pratap-singh-portfolio.vercel.app](https://veer-pratap-singh-portfolio.vercel.app)
+**Live site:** [v-and-i-portfolio.vercel.app](https://v-and-i-portfolio.vercel.app)
+
+Veer's personal portfolio lives at
+[veer-pratap-singh-portfolio.vercel.app](https://veer-pratap-singh-portfolio.vercel.app);
+its old `/research` link forwards here.
 
 ## Selected work
 

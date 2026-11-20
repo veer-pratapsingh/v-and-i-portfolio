@@ -534,6 +534,11 @@ a:hover .arrow {
   background: color-mix(in oklab, var(--card-accent, #8b8a82) 24%, var(--paper-sunk));
 }
 
+/* The scroll-in clip would hide an outside focus ring, so draw it inside. */
+.project-visual:focus-visible {
+  outline-offset: -4px;
+}
+
 .project-wide .project-visual {
   display: grid;
   align-items: center;
@@ -1708,35 +1713,170 @@ a:hover .arrow {
   }
 }
 
+/* Intro on the home page: letters pop in, the counter runs to 100, the panel slides away. */
+@property --count {
+  syntax: "<integer>";
+  inherits: false;
+  initial-value: 0;
+}
+
+.loader {
+  position: fixed;
+  z-index: 200;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(rgba(243, 239, 231, 0.08) 1px, transparent 1.6px) 0 0 / 24px 24px,
+    var(--ink);
+  color: var(--on-ink);
+  pointer-events: none;
+  animation: loader-out 650ms var(--ease-out) 1s forwards;
+}
+
+.loader::after {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: var(--accent);
+  content: "";
+  transform-origin: left;
+  animation: loader-line 900ms var(--ease-out) forwards;
+}
+
+.loader-text {
+  margin: 0;
+  padding-inline: var(--gutter);
+  font-family: var(--font-display), "Times New Roman", serif;
+  font-size: clamp(2.75rem, 8vw, 7rem);
+  letter-spacing: -0.02em;
+  line-height: 1;
+  text-align: center;
+}
+
+.loader-count {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  margin: 0;
+  color: var(--on-ink-muted);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  transform: translateX(-50%);
+  counter-reset: count var(--count);
+  animation: loader-count 900ms ease-out forwards;
+}
+
+.loader-count::after {
+  content: counter(count, decimal-leading-zero);
+}
+
+.letters .word {
+  white-space: nowrap;
+}
+
+.letters .l {
+  display: inline-block;
+}
+
+@keyframes loader-out {
+  to {
+    visibility: hidden;
+    transform: translateY(-100%);
+  }
+}
+
+@keyframes loader-line {
+  from { transform: scaleX(0); }
+}
+
+@keyframes loader-count {
+  to { --count: 100; }
+}
+
+/* Letters pop in faint, then solid; stepped, so it flickers rather than fades. */
+@keyframes letter-in {
+  0% { opacity: 0; }
+  45% { opacity: 0.35; }
+  100% { opacity: 1; }
+}
+
+/* Project previews open from an inset card as they scroll in. */
+@keyframes visual-open {
+  from { clip-path: inset(0 6% round 1.4rem); }
+  to { clip-path: inset(0 round clamp(0.9rem, 1.5vw, 1.4rem)); }
+}
+
+/* Pixel-and-glyph dissolve into the dark sections (app/pixel-transition.tsx). */
+.pixel-transition {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* Overlaps the next section by 1px to hide the sub-pixel seam. */
+.pixel-strip {
+  position: relative;
+  height: clamp(12rem, 38vh, 24rem);
+  margin-bottom: -1px;
+}
+
 @media (prefers-reduced-motion: no-preference) {
+  .loader-text .l {
+    animation: letter-in 360ms steps(1, end) backwards;
+    animation-delay: calc(var(--o) * 520ms);
+  }
+
+  /* The headline decodes while the intro slides away. */
+  .hero h1 .l {
+    animation: letter-in 420ms steps(1, end) backwards;
+    animation-delay: calc(1.15s + var(--o) * 600ms);
+  }
+
   .hero-meta,
-  .hero-line,
   .hero-foot,
   .showreel,
   .research-hero > * {
     animation: rise-in 1100ms var(--ease-out) both;
   }
 
-  .hero-line,
+  .hero-meta {
+    animation-delay: 1.2s;
+  }
+
+  .hero-foot {
+    animation-delay: 1.35s;
+  }
+
+  .showreel {
+    animation-delay: 1.5s;
+  }
+
   .research-hero > h1 {
     animation-delay: 80ms;
   }
 
-  .hero-line-accent {
-    animation-delay: 180ms;
-  }
-
-  .hero-foot,
   .research-hero-copy {
     animation-delay: 300ms;
   }
 
-  .showreel,
   .research-thesis {
     animation-delay: 420ms;
   }
 
   @supports (animation-timeline: view()) {
+    .project-visual {
+      animation: visual-open linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 100%;
+    }
+
     .section-heading,
     .research-section-heading,
     .implementation-intro,
@@ -2022,6 +2162,13 @@ a:hover .arrow {
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
+
+  /* Nothing is drawn without motion, so drop the intro and the strips' empty space. */
+  .loader,
+  .pixel-strip {
+    display: none;
+  }
+
   *, *::before, *::after {
     scroll-behavior: auto !important;
     animation-duration: 0.01ms !important;
